@@ -8,7 +8,8 @@
     "requirements": {
       "dmenu-extended": "0.0.0",
       "python": "2.7.0"
-    }
+    },
+    "verified": true
   },
   "plugin_systemPackageManager": {
     "url": "https://raw.githubusercontent.com/markhedleyjones/dmenu-extended-plugins/master/plugin_systemPackageManager.py",
@@ -19,7 +20,8 @@
     "requirements": {
       "dmenu-extended": "0.0.0",
       "python": "2.7.0"
-    }
+    },
+    "verified": true
   },
   "plugin_jrnl": {
     "url": "https://raw.githubusercontent.com/markhedleyjones/dmenu-extended-plugins/master/plugin_jrnl.py",
@@ -39,6 +41,7 @@
           "url": "https://jrnl.sh/en/stable/installation/"
         }
       ]
-    }
+    },
+    "verified": true
   }
 }
