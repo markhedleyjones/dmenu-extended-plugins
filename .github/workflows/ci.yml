@@ -19,7 +19,7 @@ jobs:
           python-version: "3.x"
 
       - name: Install ruff
-        run: pip install ruff
+        run: pip install ruff==0.14.5
 
       - name: Install biome
         run: |

@@ -174,9 +174,7 @@ class extension(dmenu_extended.dmenu):
             jrnl_json = subprocess.check_output(command)
 
         if output and jrnl_json is None:
-            self.menu(
-                "There was an error dealing with the journal", prompt="Warning: "
-            )
+            self.menu("There was an error dealing with the journal", prompt="Warning: ")
         return jrnl_json
 
     def get_journal(self, journal=None):
@@ -202,10 +200,7 @@ class extension(dmenu_extended.dmenu):
 
             line += entry["title"].rstrip(" ")
 
-            if (
-                not self.config["display_entry_titles_only"]
-                and entry["body"] != "\n"
-            ):
+            if not self.config["display_entry_titles_only"] and entry["body"] != "\n":
                 if line[-1:] != ".":
                     line += "."
                 line.rstrip(" ")
@@ -228,10 +223,9 @@ class extension(dmenu_extended.dmenu):
         print(" ".join(command))
         proc = pexpect.spawn(" ".join(command), timeout=10)
         print("step")
-        if (
-            self.journal_is_encrypted(journal=journal)
-            and not self.journal_password_managed(journal=journal)
-        ):
+        if self.journal_is_encrypted(
+            journal=journal
+        ) and not self.journal_password_managed(journal=journal):
             proc.expect(["Password: "])
             # if "password" in self.config["journals"][journal]:
             #   pword = self.config["journals"][journal]["password"]
@@ -374,9 +368,7 @@ class extension(dmenu_extended.dmenu):
                 return
         else:
             # Terminal based
-            self.open_terminal(
-                f"jrnl -from {date_str} -to {date_str} --edit"
-            )
+            self.open_terminal(f"jrnl -from {date_str} -to {date_str} --edit")
 
     def iso_date_str(self, date_in):
         return date_in.strftime("%Y-%m-%d")
