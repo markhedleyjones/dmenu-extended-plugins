@@ -1,11 +1,12 @@
-import dmenu_extended
-import sys
 import datetime
+import json
 import os
 import subprocess
-import json
-import pexpect
+import sys
+
+import dmenu_extended
 import keyring
+import pexpect
 
 path_config = dmenu_extended.path_prefs + "/jrnl.txt"
 
@@ -84,7 +85,7 @@ class extension(dmenu_extended.dmenu):
                 ):
                     match = False
 
-            if match == False:
+            if not match:
                 for key in defaults["default_settings"]:
                     tmp["default_settings"][key] = defaults["default_settings"][key]
                 self.save_json(path_config, tmp)
@@ -144,12 +145,15 @@ class extension(dmenu_extended.dmenu):
             try:
                 command = " ".join(command)
                 proc = pexpect.spawn(command, timeout=timeout)
-                if self.journal_password_managed(journal=journal) == False:
+                if not self.journal_password_managed(journal=journal):
                     proc.expect(["Password: "])
                     # if "password" in self.config["journals"][journal]:
                     #   pword = self.config["journals"][journal]["password"]
                     # else:
-                    #   pword = self.menu(" ", prompt="Password ("+self.current_journal+"): ")
+                    #   pword = self.menu(
+                    #     " ",
+                    #     prompt="Password ("+self.current_journal+"): "
+                    #   )
                     # pword = self.get_journal_password(journal)
                     # proc.sendline(pword)
                     proc.sendline(self.get_journal_password(journal))
@@ -163,14 +167,14 @@ class extension(dmenu_extended.dmenu):
             except pexpect.exceptions.TIMEOUT:
                 print("except")
                 if output:
-                    out = self.menu("Incorrect password", prompt="")
+                    self.menu("Incorrect password", prompt="")
                     sys.exit()
 
         else:
             jrnl_json = subprocess.check_output(command)
 
         if output and jrnl_json is None:
-            out = self.menu(
+            self.menu(
                 "There was an error dealing with the journal", prompt="Warning: "
             )
         return jrnl_json
@@ -178,7 +182,7 @@ class extension(dmenu_extended.dmenu):
     def get_journal(self, journal=None):
         print("get journal")
         if journal is None:
-            journal is self.current_journal
+            journal = self.current_journal
         command = ["jrnl"]
         if journal is not None and journal in self.config["journals"]:
             command.append(journal)
@@ -199,7 +203,7 @@ class extension(dmenu_extended.dmenu):
             line += entry["title"].rstrip(" ")
 
             if (
-                self.config["display_entry_titles_only"] == False
+                not self.config["display_entry_titles_only"]
                 and entry["body"] != "\n"
             ):
                 if line[-1:] != ".":
@@ -215,7 +219,7 @@ class extension(dmenu_extended.dmenu):
     def encrypt_journal(self, journal=None):
         print("encrypt journal")
         if journal is None:
-            journal is self.current_journal
+            journal = self.current_journal
 
         pword = None
 
@@ -226,7 +230,7 @@ class extension(dmenu_extended.dmenu):
         print("step")
         if (
             self.journal_is_encrypted(journal=journal)
-            and self.journal_password_managed(journal=journal) == False
+            and not self.journal_password_managed(journal=journal)
         ):
             proc.expect(["Password: "])
             # if "password" in self.config["journals"][journal]:
@@ -259,7 +263,7 @@ class extension(dmenu_extended.dmenu):
     def decrypt_journal(self, journal=None):
         print("decrypt journal")
         if journal is None:
-            journal is self.current_journal
+            journal = self.current_journal
         self.run_journal_command(
             ["jrnl", journal, "--decrypt"], output=False, timeout=5
         )
@@ -274,7 +278,7 @@ class extension(dmenu_extended.dmenu):
 
         if (
             "encrypt" in self.config["journals"][self.current_journal]
-            and self.config["journals"][self.current_journal]["encrypt"] == True
+            and self.config["journals"][self.current_journal]["encrypt"]
         ):
             if keyring.get_password("jrnl", journal) is not None:
                 self.config["journals"][self.current_journal]["managed"] = True
@@ -371,7 +375,7 @@ class extension(dmenu_extended.dmenu):
         else:
             # Terminal based
             self.open_terminal(
-                "jrnl -from {date} -to {date} --edit".format(date=date_str)
+                f"jrnl -from {date_str} -to {date_str} --edit"
             )
 
     def iso_date_str(self, date_in):
@@ -435,7 +439,7 @@ class extension(dmenu_extended.dmenu):
         self.current_journal = journal_name
 
     def main(self):
-        if self.jrnl_configured == False:
+        if not self.jrnl_configured:
             print("jrnl not configured")
             self.setup_jrnl()
         else:
@@ -444,7 +448,7 @@ class extension(dmenu_extended.dmenu):
         while True:
             print("main")
             # Prompt the user to install jrnl if not already installed
-            if self.jrnl_installed == False:
+            if not self.jrnl_installed:
                 options = ["Could not find jrnl - do you have it installed?"]
                 options.append(self.prefs["indicator_submenu"] + " Visit jrnl website")
                 out = self.select(options, prompt="Error!")
@@ -458,8 +462,8 @@ class extension(dmenu_extended.dmenu):
 
             journal_data = self.get_journal(self.current_journal)
 
-            if len(journal_data) > 0 and self.bodies_current_journal_flag == True:
-                if self.config["display_entry_titles_only"] == True:
+            if len(journal_data) > 0 and self.bodies_current_journal_flag:
+                if self.config["display_entry_titles_only"]:
                     options.append(
                         self.prefs["indicator_submenu"] + " Show full entries"
                     )

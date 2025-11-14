@@ -1,5 +1,5 @@
+
 import dmenu_extended
-import sys
 
 
 class extension(dmenu_extended.dmenu):

@@ -1,5 +1,6 @@
-import dmenu_extended
 import sys
+
+import dmenu_extended
 
 file_prefs = dmenu_extended.path_prefs + "/internetSearch.json"
 
@@ -31,7 +32,7 @@ class extension(dmenu_extended.dmenu):
 
     def load_providers(self):
         providers = self.load_json(file_prefs)
-        if providers == False:
+        if not providers:
             self.create_default_providers()
             providers = self.load_json(file_prefs)
 

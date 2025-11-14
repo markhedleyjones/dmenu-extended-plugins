@@ -1,5 +1,6 @@
-import dmenu_extended
 import os
+
+import dmenu_extended
 
 
 class extension(dmenu_extended.dmenu):
@@ -48,12 +49,14 @@ class extension(dmenu_extended.dmenu):
             self.command_installPackage = "sudo emerge "
             self.command_removePackage = "sudo emerge --unmerge "
             self.command_listInstalled = (
-                "cd /var/db/pkg/ && ls -d */* | sed 's/\-[0-9].*$//' > "
+                r"cd /var/db/pkg/ && ls -d */* | sed 's/\-[0-9].*$//' > "
                 + dmenu_extended.path_cache
                 + "/tmp.txt"
             )
             self.command_listAvailable = (
-                'emerge --search "" | grep "*  " | cut -c 4- | sed "s/\[ Masked \]//g" | sed -n \'/^app-accessibility/,$p\' > '
+                'emerge --search "" | grep "*  " | cut -c 4- | '
+                'sed "s/\\[ Masked \\]//g" | '
+                "sed -n '/^app-accessibility/,$p' > "
                 + dmenu_extended.path_cache
                 + "/tmp.txt"
             )
@@ -63,7 +66,7 @@ class extension(dmenu_extended.dmenu):
     def install_package(self):
         packages = self.cache_open(self.cache_packages)
 
-        if packages == False:
+        if not packages:
             self.menu("No package database exists. Press enter to build cache")
             self.build_package_cache()
             packages = self.cache_open(self.cache_packages)
@@ -256,7 +259,7 @@ class extension(dmenu_extended.dmenu):
                 self.cache_regenerate()
 
     def run(self, inputText):
-        if self.detected_packageManager == False:
+        if not self.detected_packageManager:
             self.menu(["Your system package manager could not be determined"])
             self.sys.exit()
         else:
