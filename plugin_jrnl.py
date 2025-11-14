@@ -443,7 +443,7 @@ class extension(dmenu_extended.dmenu):
         try:
           date_length = len(datetime.datetime.today().strftime(self.config['timeformat']))
           entry_date = datetime.datetime.strptime(out[:date_length], self.config['timeformat'])
-        except:
+        except Exception:
           pass
         if entry_date is not None:
           self.edit(out, entry_date)
