@@ -1,22 +1,9 @@
 {
   "plugin_internetSearch": {
-    "url": "https://raw.githubusercontent.com/markhedleyjones/dmenu-extended-plugins/master/plugin_internetSearch.py",
+    "url": "https://raw.githubusercontent.com/markhedleyjones/dmenu-extended-plugins/main/plugin_internetSearch.py",
     "desc": "Adds search providers for faster internet searching",
-    "sha1sum": "299fa0970d045e19e4638a232d23c0b0c61ad1c8",
-    "_min_version_comment": "min_version will be depreciated after 2024-08-01, plugins should use semantic-based requirements field",
-    "min_version": 0.0,
-    "requirements": {
-      "dmenu-extended": "0.0.0",
-      "python": "2.7.0"
-    },
-    "verified": true
-  },
-  "plugin_systemPackageManager": {
-    "url": "https://raw.githubusercontent.com/markhedleyjones/dmenu-extended-plugins/master/plugin_systemPackageManager.py",
-    "desc": "Browse, install, remove and update system packages using your package manager. Supports Arch, Debian, Gentoo, and Redhat based distributions",
-    "sha1sum": "7282745ce289c34e8cc6e23016753282277ac8b3",
-    "_min_version_comment": "min_version will be depreciated after 2024-08-01, plugins should use semantic-based requirements field",
-    "min_version": 0.0,
+    "sha1sum": "c0478ef7b409cc686f5380c253249568dbb84d8d",
+    "sha256": "b8379d0e3315bb0b00b724a81a476c88a9608b8541a425856ef7c456f08b7fae",
     "requirements": {
       "dmenu-extended": "0.0.0",
       "python": "2.7.0"
@@ -24,11 +11,10 @@
     "verified": true
   },
   "plugin_jrnl": {
-    "url": "https://raw.githubusercontent.com/markhedleyjones/dmenu-extended-plugins/master/plugin_jrnl.py",
+    "url": "https://raw.githubusercontent.com/markhedleyjones/dmenu-extended-plugins/main/plugin_jrnl.py",
     "desc": "Interation with 'jrnl', a command line journal that is future-proof and secure",
-    "sha1sum": "bcb5d2ec4788a972867b2d6581d68d20c9c03b4a",
-    "_min_version_comment": "min_version will be depreciated after 2024-08-01, plugins should use semantic-based required_version instead",
-    "min_version": 16.1023,
+    "sha1sum": "7cdf8126a8869ac06b121c46838ebf5222cd7bcd",
+    "sha256": "a1862cefa59c842c3a2a473267d849ce5aa34335f56d0a60b7ee606ecc30f8f1",
     "requirements": {
       "dmenu-extended": "0.0.0",
       "python": "2.7.0"
@@ -41,6 +27,17 @@
           "url": "https://jrnl.sh/en/stable/installation/"
         }
       ]
+    },
+    "verified": true
+  },
+  "plugin_systemPackageManager": {
+    "url": "https://raw.githubusercontent.com/markhedleyjones/dmenu-extended-plugins/main/plugin_systemPackageManager.py",
+    "desc": "Browse, install, remove and update system packages using your package manager. Supports Arch, Debian, Gentoo, and Redhat based distributions",
+    "sha1sum": "776d571b853203ee8f18961dc7ec942db76d3e3d",
+    "sha256": "274b40e841898bb3e3c96e1827c64384c301c3de47467841f1722764797913ec",
+    "requirements": {
+      "dmenu-extended": "0.0.0",
+      "python": "2.7.0"
     },
     "verified": true
   }
